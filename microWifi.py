@@ -4,7 +4,6 @@ Copyright © 2018 Jean-Christophe Bos & HC² (www.hc2.fr)
 """
 
 from network  import WLAN
-from machine  import Timer
 from time     import sleep, ticks_ms, ticks_diff
 from binascii import hexlify
 from os       import mkdir
