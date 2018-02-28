@@ -114,17 +114,23 @@ class MicroWifi :
     # ----------------------------------------------------------------------------
 
     def GetAPInfos(self) :
+        if not self.IsAccessPointOpened() :
+            self._setAPInfos()
         return self._apInfos
 
     # ----------------------------------------------------------------------------
 
     def GetConnectionInfos(self) :
+        if not self.IsConnectedToAP() :
+            self._setConnectionInfos()
         return self._connInfos
 
     # ----------------------------------------------------------------------------
 
     def ScanAP(self) :
         try :
+            if self._wlan.mode() == WLAN.STA :
+                self._wlan.init(antenna=self._antenna)
             return self._wlan.scan()
         except :
             return ()
