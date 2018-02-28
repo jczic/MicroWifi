@@ -137,8 +137,10 @@ class MicroWifi :
 
     # ----------------------------------------------------------------------------
 
-    def OpenAccessPoint(self, ssid, key, ip, autoSave=True) :
-        if ssid and key and ip :
+    def OpenAccessPoint(self, ssid, key=None, ip='192.168.0.254', autoSave=True) :
+        if not key :
+            key = ''
+        if ssid and ip :
             try :
                 self._wlan.ifconfig( id     = self._ETH_AP,
                                      config = (ip, self._AP_MASK, ip, ip) )
