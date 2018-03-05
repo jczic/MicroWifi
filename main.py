@@ -27,7 +27,7 @@ wifi = MicroWifi()
 Timer.Alarm(_timerProcess, 3, periodic=True)
 
 if not wifi.OpenAccessPointFromConf() :
-	wifi.OpenAccessPoint('.-= AP TEST =-.', 'azerty123', '192.168.0.254')
+	wifi.OpenAccessPoint('.-= AP TEST =-.', None, '192.168.0.254')
 
 if not wifi.ConnectToAPFromConf() :
 	wifi.ConnectToAP('JCzic', 'azerty123')
