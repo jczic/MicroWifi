@@ -1,4 +1,4 @@
-### MicroWiFi is a micro WiFi class that supports the two LAN wireless interfaces (AP&STA) and manages many automatized methods, for MicroPython (used on ESP32 and [Pycom](http://www.pycom.io) modules)
+### MicroWiFi is a class that supports the two LAN wireless interfaces (AP&STA) and manages many automatized methods, for MicroPython (used on ESP32 and [Pycom](http://www.pycom.io) modules)
 
 Very easy to integrate and very light with one file only :
 - `"microWifi.py"`
