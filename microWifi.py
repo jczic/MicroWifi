@@ -4,6 +4,7 @@ Copyright © 2018 Jean-Christophe Bos & HC² (www.hc2.fr)
 """
 
 from network  import WLAN
+from socket   import getaddrinfo
 from time     import sleep, ticks_ms, ticks_diff
 from binascii import hexlify
 from os       import mkdir
@@ -294,7 +295,6 @@ class MicroWifi :
 
     def CloseConnectionToAP(self) :
         try :
-            ip = self._IP_NONE
             self._wlan.disconnect()
             self._wlan.ifconfig( id     = self._ETH_STA,
                                  config = 'dhcp' )
@@ -306,3 +306,39 @@ class MicroWifi :
 
     def IsConnectedToAP(self) :
         return self._wlan.ifconfig(self._ETH_STA)[0] != self._IP_NONE
+
+    # ----------------------------------------------------------------------------
+
+    def ResolveIPFromHostname(self, hostname) :
+        originalMode = self._wlan.mode()
+        if originalMode == WLAN.STA_AP :
+            self._wlan.mode(WLAN.STA)
+        try :
+            ipResolved = getaddrinfo(hostname, 0)[0][-1][0]
+        except :
+            ipResolved = None
+        if originalMode == WLAN.STA_AP :
+            self._wlan.mode(WLAN.STA_AP)
+        return ipResolved if ipResolved != self._IP_NONE else None
+
+    # ----------------------------------------------------------------------------
+
+    def InternetAccessIsPresent(self) :
+        return ( self.ResolveIPFromHostname('iana.org') is not None )
+
+    # ----------------------------------------------------------------------------
+
+    def WaitForInternetAccess(self, timeoutSec=None) :
+        if not timeoutSec :
+            timeoutSec = self._DEFAULT_TIMEOUT_SEC
+        timeout = timeoutSec * 1000
+        t = ticks_ms()
+        while ticks_diff(t, ticks_ms()) < timeout :
+            sleep(0.100)
+            if self.InternetAccessIsPresent() :
+                return True
+        return False
+
+    # ============================================================================
+    # ============================================================================
+    # ============================================================================

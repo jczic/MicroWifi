@@ -1,6 +1,7 @@
 
 from microWifi import MicroWifi
 from machine   import Timer
+from time      import sleep
 
 # ============================================================================
 # ===( Functions )============================================================
@@ -8,8 +9,10 @@ from machine   import Timer
 
 def _timerProcess(timer) :
 	print('-----------------------------')
-	print('AP  opened    : %s' % wifi.IsAccessPointOpened())
-	print('STA connected : %s' % wifi.IsConnectedToAP())
+	print('Access point opened   : %s' % wifi.IsAccessPointOpened())
+	print('Connected to AP       : %s' % wifi.IsConnectedToAP())
+	print('Internet access       : %s' % wifi.InternetAccessIsPresent())
+	print('google.com IP address : %s' % wifi.ResolveIPFromHostname('google.com'))
 	print('-----------------------------')
 
 # ============================================================================
