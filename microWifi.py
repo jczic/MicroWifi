@@ -183,7 +183,7 @@ class MicroWifi :
 
     def RemoveAccessPointFromConf(self) :
         try :
-            self._confObj.pop('AP')
+            del self._confObj['AP']
             return self._writeConf()
         except :
             return False
@@ -254,7 +254,7 @@ class MicroWifi :
                     self.CloseConnectionToAP()
                     break
             print("FAILED TO CONNECT WIFI TO AP %s" % ssid)
-            return False
+        return False
 
     # ----------------------------------------------------------------------------
 
@@ -280,10 +280,10 @@ class MicroWifi :
     def RemoveConnectionToAPFromConf(self, ssid, macBssid=None) :
         try :
             changed = False
-            for bssid in self._confObj['STA'] :
+            for bssid in list(self._confObj['STA']) :
                 if self._confObj['STA'][bssid]['ssid'] == ssid and \
                    ( not macBssid or bssid == macBssid ) :
-                   self._confObj['STA'].pop(bssid)
+                   del self._confObj['STA'][bssid]
                    changed = True
             if changed :
                 return self._writeConf()
